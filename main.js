@@ -85,7 +85,7 @@ function startAdapter(options) {
                 if (dp === 'play_time' && zone == 'netusb') {
                     yamaha.SendGetToDevice("/netusb/setPlayPosition?position=" + state.val).then(function (result) {
                         if (JSON.parse(result).response_code === 0) {
-                            adapter.log.debug('sent play_time succesfully to ' + zone + ' with ' + state.val);
+                            adapter.log.info('sent play_time succesfully to ' + zone + ' with ' + state.val);
                             if (adapter.config.netusbplaytime) {
                                 // refresh to get current value
                                 setTimeout(function () {
@@ -93,7 +93,7 @@ function startAdapter(options) {
                                 }, 500);
                             }
                         }
-                        else adapter.log.debug('failure sent play_time (val=' + state.val + ')' + responseFailLog(result));
+                        else adapter.log.error('failure sent play_time (val=' + state.val + ')' + responseFailLog(result));
                     });
 
                     return;
@@ -102,7 +102,7 @@ function startAdapter(options) {
                 if (dp === 'playback' && zone == 'netusb') {
                     yamaha.setNetPlayback(state.val).then(function (result) {
                         if (JSON.parse(result).response_code === 0) {
-                            adapter.log.debug('sent playback-status succesfully to ' + zone + ' with ' + state.val);
+                            adapter.log.info('sent playback-status succesfully to ' + zone + ' with ' + state.val);
                             if (adapter.config.netusbplaytime) {
                                 // refresh to get current value
                                 setTimeout(function () {
@@ -110,7 +110,7 @@ function startAdapter(options) {
                                 }, 500);
                             }
                         }
-                        else adapter.log.debug('failure sent playback-status (val=' + state.val + ')' + responseFailLog(result));
+                        else adapter.log.error('failure sent playback-status (val=' + state.val + ')' + responseFailLog(result));
                     });
 
                     return;
