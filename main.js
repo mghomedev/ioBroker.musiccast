@@ -1911,7 +1911,7 @@ function defineMusicNetUsb(type, uid){
         type: 'state',
         common: {
             "name": "Trigger force refresh by polling",
-            "type": "array",
+            "type": "value",
             "read": false,
             "write": true,
             "role": "value",
