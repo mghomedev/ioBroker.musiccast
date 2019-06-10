@@ -3592,6 +3592,10 @@ function gotUpdate(msg, devIp){
         if (msg.netusb.play_time  && adapter.config.netusbplaytime){
             adapter.setForeignState('musiccast.0.'+ dev[0].type + '_' + dev[0].uid + '.netusb.playtime', {val: msg.netusb.play_time, ack: true});
         } 
+        if (msg.netusb.total_time){
+            adapter.setForeignState('musiccast.0.'+ dev[0].type + '_' + dev[0].uid + '.netusb.total_time', {val: msg.netusb.total_time, ack: true});
+        } 
+
         if (msg.netusb.play_info_updated){
             getMusicNetusbInfo(devIp, dev[0].type, dev[0].uid);
         }
