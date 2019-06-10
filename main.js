@@ -88,9 +88,9 @@ function startAdapter(options) {
                             adapter.log.debug('sent play_time succesfully to ' + zone + ' with ' + state.val);
                             if (adapter.config.netusbplaytime) {
                                 // refresh to get current value
-                                setTimeout(500, function () {
+                                setTimeout(function () {
                                     getMusicNetusbInfo(devIp, objtype, uid); // trigger reread
-                                });
+                                }, 500);
                             }
                         }
                         else adapter.log.debug('failure sent play_time (val=' + state.val + ')' + responseFailLog(result));
@@ -98,6 +98,24 @@ function startAdapter(options) {
 
                     return;
                 }
+
+                if (dp === 'playback' && zone == 'netusb') {
+                    yamaha.setNetPlayback(state.val).then(function (result) {
+                        if (JSON.parse(result).response_code === 0) {
+                            adapter.log.debug('sent playback-status succesfully to ' + zone + ' with ' + state.val);
+                            if (adapter.config.netusbplaytime) {
+                                // refresh to get current value
+                                setTimeout(function () {
+                                    getMusicNetusbInfo(devIp, objtype, uid); // trigger reread
+                                }, 500);
+                            }
+                        }
+                        else adapter.log.debug('failure sent playback-status (val=' + state.val + ')' + responseFailLog(result));
+                    });
+
+                    return;
+                }
+
 
                 if (dp === 'power'){
                     yamaha.power(state.val, zone).then(function(result) {
@@ -1604,7 +1622,7 @@ function defineMusicNetUsb(type, uid){
             "name": "playback status",
             "type": "string",
             "read": true,
-            "write": false,
+            "write": true,
             "role": "text",
             "desc": "playback status"
         },
