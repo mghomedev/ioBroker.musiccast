@@ -82,6 +82,23 @@ function startAdapter(options) {
                     return;
                 }
              
+                if (dp === 'play_time' && zone == 'netusb') {
+                    yamaha.SendGetToDevice("/netusb/setPlayPosition?position=" + state.val).then(function (result) {
+                        if (JSON.parse(result).response_code === 0) {
+                            adapter.log.debug('sent play_time succesfully to ' + zone + ' with ' + state.val);
+                            if (adapter.config.netusbplaytime) {
+                                // refresh to get current value
+                                setTimeout(500, function () {
+                                    getMusicNetusbInfo(devIp, objtype, uid); // trigger reread
+                                });
+                            }
+                        }
+                        else adapter.log.debug('failure sent play_time (val=' + state.val + ')' + responseFailLog(result));
+                    });
+
+                    return;
+                }
+
                 if (dp === 'power'){
                     yamaha.power(state.val, zone).then(function(result) {
                         if (JSON.parse(result).response_code === 0 ){
@@ -1755,7 +1772,7 @@ function defineMusicNetUsb(type, uid){
             "name": "played  time",
             "type": "number",
             "read": true,
-            "write": false,
+            "write": true,
             "unit": "s",
             "role": "value",
             "desc": "played time"
