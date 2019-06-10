@@ -60,6 +60,7 @@ function startAdapter(options) {
                 
                 //ermitteln der IP aus config
                 adapter.log.debug('device with uid = ' + idy.split("_")[1]);
+                var objtype = idy.split("_")[0];
                 var uid = idy.split("_")[1];
                 var IP = getConfigObjects(adapter.config.devices, 'uid', uid);
                 adapter.log.debug('config items : ' + JSON.stringify(adapter.config.devices));
@@ -67,8 +68,20 @@ function startAdapter(options) {
                 
                 yamaha = new YamahaYXC(IP[0].ip);
         
+                var devIp = IP[0].ip;
                 var zone = idx;
                 
+                if (dp === 'triggerForceRefresh') {
+                   
+                    if (zone == null || zone == "" || zone == "netusb" || zone == "system") {
+                        getMusicNetusbRecent(devIp, objtype, uid);
+                        getMusicNetusbInfo(devIp, objtype, uid);
+                        getMusicNetusbPreset(devIp, objtype, uid);
+                    }
+
+                    return;
+                }
+             
                 if (dp === 'power'){
                     yamaha.power(state.val, zone).then(function(result) {
                         if (JSON.parse(result).response_code === 0 ){
@@ -1858,6 +1871,19 @@ function defineMusicNetUsb(type, uid){
         },
         native: {}
     });   
+
+    adapter.setObjectNotExists(type + '_' + uid + '.netusb.triggerForceRefresh', {
+        type: 'state',
+        common: {
+            "name": "Trigger force refresh by polling",
+            "type": "array",
+            "read": false,
+            "write": true,
+            "role": "value",
+            "desc": "Change the value to trigger polling"
+        },
+        native: {}
+    });
 }
 function defineMusicCD(type, uid){
     adapter.setObjectNotExists(type + '_' + uid + '.cd', {
