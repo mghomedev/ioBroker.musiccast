@@ -77,7 +77,7 @@ The following objects are currently implemented:
 |--------|-------|:-:|--------|
 |netusb.input|value|x|set/actual input|
 |netusb.playPause|boolean|x|set Play/Pause|
-|netusb.playback|text|-|status net player|
+|netusb.playback|text|x|status net player|
 |netusb.auto_stop|boolean|-|automatically stopped|
 |netusb.next|boolean|x|set Forward|
 |netusb.prev|boolean|x|set Rewind|
@@ -90,7 +90,7 @@ The following objects are currently implemented:
 |netusb.track|text|-|track name|
 |netusb.albumart_url|text|-|http address for album art|
 |netusb.albumart_id|value|-|album art id|
-|netusb.play_time|value|-|played time in s|
+|netusb.play_time|value|x|played time in s|
 |netusb.play_queue_type|text|-|netusb queue type|
 |netusb.total_time|value|-|total time played in s|
 |netusb.recent_info|json|-|history of played items|
@@ -98,6 +98,7 @@ The following objects are currently implemented:
 |netusb.presetrecallnumber|value|x|recall the # in the favourite list|
 |netusb.usb_devicetype|text|-|type of connected USB device|
 |netusb.attribute|value|-|which possibiolites has the service, to be decoded|
+|netusb.triggerForceRefresh|value|x| write any value to trigger reload of netusb status from Yamaha server |
 
 ### system
 |Object|Value|settable|Description|
@@ -200,6 +201,12 @@ The following objects are currently implemented:
 * dialog level
 
 ## Changelog
+#### mghomedev-branch changes
+* introduce netusb.triggerForceRefresh to trigger reload of netusb data from server
+* make netusb.playback writable and when written allow improved 'pause'-behavior to allow external scripts to see if 'pause' is pending 
+* make netusb.playtime writable
+* tried to make netusb.total_time working, but the Yamaha servers do not seem to send the data (always 0)
+
 #### 0.1.1
 * correction for clock "oneday"
 
