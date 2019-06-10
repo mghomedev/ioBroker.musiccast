@@ -102,9 +102,20 @@ function startAdapter(options) {
                 }
 
                 if (dp === 'playback' && zone == 'netusb') {
-                    yamaha.setNetPlayback(state.val).then(function (result) {
+                    let playbackCommand = state.val;
+
+                    if (playbackCommand == 'pausePending') return;
+
+                    if (playbackCommand == 'pause') {
+                        // bugfix against strange Yamaha behavior that starts play again when 'pause' is sent twice
+                        // note that we trigger refresh anyways
+                        adapter.setForeignState(id, {val: "pausePending", ack: true}); 
+                    }
+                    adapter.log.info('invoking to sent playback-status succesfully to ' + zone + ' with ' + playbackCommand);
+                        
+                    yamaha.setNetPlayback(playbackCommand).then(function (result) {
                         if (JSON.parse(result).response_code === 0) {
-                            adapter.log.info('sent playback-status succesfully to ' + zone + ' with ' + state.val);
+                            adapter.log.info('sent playback-status succesfully to ' + zone + ' with ' + playbackCommand);
                             if (adapter.config.netusbplaytime) {
                                 // refresh to get current value
                                 setTimeout(function () {
@@ -112,7 +123,10 @@ function startAdapter(options) {
                                 }, 500);
                             }
                         }
-                        else adapter.log.error('failure sent playback-status (val=' + state.val + ')' + responseFailLog(result));
+                        else{
+                            adapter.log.error('failure sent playback-status (val=' + playbackCommand + ')' + responseFailLog(result));
+                            adapter.setForeignState(id, {val: "errorUnknown", ack: true});                        
+                        } 
                     });
 
                     return;
