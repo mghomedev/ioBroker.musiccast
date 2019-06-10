@@ -1,6 +1,8 @@
 ![Logo](admin/musiccast.png)
 # ioBroker.musiccast
 
+WARNING: BRANCH by mghomedev
+
 ![Number of Installations](http://iobroker.live/badges/musiccast-installed.svg) ![Number of Installations](http://iobroker.live/badges/musiccast-stable.svg) [![NPM version](http://img.shields.io/npm/v/iobroker.musiccast.svg)](https://www.npmjs.com/package/iobroker.musiccast)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.musiccast.svg)](https://www.npmjs.com/package/iobroker.musiccast)
 [![Build Status](https://travis-ci.org/foxthefox/ioBroker.musiccast.svg?branch=master)](https://travis-ci.org/foxthefox/ioBroker.musiccast)
@@ -8,7 +10,7 @@
 
 [![NPM](https://nodei.co/npm/iobroker.musiccast.png?downloads=true)](https://nodei.co/npm/iobroker.musiccast/)
 
-adapter for Yamaha MusicCast devices like WX-010/030, YSP-1600
+adapter for Yamaha MusicCast devices like WX-010/030, YSP-1600 (BRANCH by mghomedev)
 
 ## Installation:
 Installation requires nodejs v4 at minimum
