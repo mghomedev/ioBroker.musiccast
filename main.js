@@ -74,6 +74,8 @@ function startAdapter(options) {
                 if (dp === 'triggerForceRefresh') {
                    
                     if (zone == null || zone == "" || zone == "netusb" || zone == "system") {
+                        adapter.log.info('sending triggerForceRefresh  to ' + zone + '...');
+                           
                         getMusicNetusbRecent(devIp, objtype, uid);
                         getMusicNetusbInfo(devIp, objtype, uid);
                         getMusicNetusbPreset(devIp, objtype, uid);
@@ -1911,7 +1913,7 @@ function defineMusicNetUsb(type, uid){
         type: 'state',
         common: {
             "name": "Trigger force refresh by polling",
-            "type": "value",
+            "type": "number",
             "read": false,
             "write": true,
             "role": "value",
