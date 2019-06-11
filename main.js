@@ -74,12 +74,25 @@ function startAdapter(options) {
                 if (dp === 'triggerForceRefresh') {
                    
                     if (zone == null || zone == "" || zone == "netusb" || zone == "system") {
-                        adapter.log.info('sending triggerForceRefresh  to ' + zone + '...');
-                           
+                        adapter.log.info('sending triggerForceRefresh for netUSB  to ' + zone + '...');
+
                         getMusicNetusbRecent(devIp, objtype, uid);
                         getMusicNetusbInfo(devIp, objtype, uid);
                         getMusicNetusbPreset(devIp, objtype, uid);
                     }
+
+                    if (zone == null || zone == "" || zone === "system" || zone === "main") {
+                        adapter.log.info('sending triggerForceRefresh  for zone ' + zone + '...');
+
+                        getMusicZoneInfo(devIp, objtype, zone);
+                    }
+
+                    if (zone == null || zone == "" || zone === "system") {
+                        adapter.log.info('sending triggerForceRefresh for deviceInfo for zone ' + zone + '...');
+
+                        getMusicDeviceInfo(devIp, objtype, zone);
+                    }
+
 
                     return;
                 }
@@ -1162,6 +1175,21 @@ function defineMusicZoneNew(type, uid, zone, zone_arr){
     if (zone_arr.func_list.indexOf("signal_info") !== -1){
         // signal info audio ....
     }
+
+
+    adapter.setObjectNotExists(type + '_' + uid + '.' + zone + '.triggerForceRefresh', {
+        type: 'state',
+        common: {
+            "name": "Trigger force refresh by polling",
+            "type": "number",
+            "read": false,
+            "write": true,
+            "role": "value",
+            "desc": "Change the value to trigger polling"
+        },
+        native: {}
+    });
+    
 }
 function defineMusicInputs(type, uid, zone, inputs){
     adapter.log.info('Setting up Inputs in Zone:' + zone + ' of ' + type + '-' + uid);
