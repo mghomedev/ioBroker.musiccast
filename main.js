@@ -84,13 +84,13 @@ function startAdapter(options) {
                     if (zone == null || zone == "" || zone === "system" || zone === "main") {
                         adapter.log.info('sending triggerForceRefresh  for zone ' + zone + '...');
 
-                        getMusicZoneInfo(devIp, objtype, zone);
+                        getMusicZoneInfo(devIp, objtype, uid, zone);
                     }
 
                     if (zone == null || zone == "" || zone === "system") {
                         adapter.log.info('sending triggerForceRefresh for deviceInfo for zone ' + zone + '...');
 
-                        getMusicDeviceInfo(devIp, objtype, zone);
+                        getMusicDeviceInfo(devIp, objtype, uid, zone);
                     }
 
 
