@@ -582,7 +582,7 @@ function startAdapter(options) {
     adapter = new utils.Adapter(options);
 
     return adapter;
-};
+}
 
 
 function responseFailLog(fail) {
@@ -2159,7 +2159,7 @@ function defineMusicCD(type, uid) {
             "desc": "CD track title"
         },
         native: {}
-    })
+    });
 }
 function defineMusicTuner(type, uid, func_list, range_step, preset) {
     adapter.setObjectNotExists(type + '_' + uid + '.tuner', {
@@ -2879,7 +2879,7 @@ function defineMusicClock(type, uid, func_list, range_step, alarm_fade_type_num,
     }
 
     if (alarm_mode_list.indexOf("weekly") !== -1) {
-        var days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
+        var days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
         for (anz in days) {
             //loop days[anz]
             adapter.setObjectNotExists(type + '_' + uid + '.clock.' + days[anz] + '.enable', {
@@ -3033,8 +3033,8 @@ function getMusicDeviceInfo(ip, type, uid) {
             adapter.log.debug('got device info succesfully from ' + devip);
 
 
-            var resp = { "device": devtype + '_' + devuid, "request": "/system/getDeviceInfo", "responses": att }
-            if (!responses.find(o => o.device === devtype + '_' + devuid && o.request === '/system/getDeviceInfo')) responses.push(resp)
+            var resp = { "device": devtype + '_' + devuid, "request": "/system/getDeviceInfo", "responses": att };
+            if (!responses.find(o => o.device === devtype + '_' + devuid && o.request === '/system/getDeviceInfo')) responses.push(resp);
             adapter.setForeignState('musiccast.0.' + devtype + '_' + devuid + '.system.getDeviceInfo', { val: att, ack: true });
 
             adapter.setForeignState('musiccast.0.' + devtype + '_' + devuid + '.system.api_version', { val: att.api_version, ack: true });
@@ -3046,7 +3046,7 @@ function getMusicDeviceInfo(ip, type, uid) {
 
     }).catch(function (err) {
         if (err.message.includes('connect EHOSTUNREACH')) {
-            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!')
+            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!');
         } else {
             adapter.log.error(`[getMusicDeviceInfo] error: ${err.message}, stack: ${err.stack}`);
         }
@@ -3063,8 +3063,8 @@ function getMusicZoneInfo(ip, type, uid, zone) {
         if (att.response_code === 0) {
             adapter.log.debug('got status info succesfully from ' + devip + ' for ' + zone_name);
 
-            var resp = { "device": devtype + '_' + devuid, "request": "/" + zone_name + "/getStatus", "responses": att }
-            if (!responses.find(o => o.device === devtype + '_' + devuid && o.request === '/' + zone_name + '/getStatus')) responses.push(resp)
+            var resp = { "device": devtype + '_' + devuid, "request": "/" + zone_name + "/getStatus", "responses": att };
+            if (!responses.find(o => o.device === devtype + '_' + devuid && o.request === '/' + zone_name + '/getStatus')) responses.push(resp);
             adapter.setForeignState('musiccast.0.' + devtype + '_' + devuid + '.' + zone_name + '.getStatus', { val: att, ack: true });
 
             for (var key in att) {
@@ -3113,7 +3113,7 @@ function getMusicZoneInfo(ip, type, uid, zone) {
 
     }).catch(function (err) {
         if (err.message.includes('connect EHOSTUNREACH')) {
-            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!')
+            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!');
         } else {
             adapter.log.error(`[getMusicZoneInfo] error: ${err.message}, stack: ${err.stack}`);
         }
@@ -3162,7 +3162,7 @@ function getMusicZoneLists(ip, type, uid) {
 
     }).catch(function (err) {
         if (err.message.includes('connect EHOSTUNREACH')) {
-            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!')
+            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!');
         } else {
             adapter.log.error(`[getMusicZoneLists] error: ${err.message}, stack: ${err.stack}`);
         }
@@ -3182,8 +3182,8 @@ function getMusicNetusbInfo(ip, type, uid) {
             }
             adapter.log.debug('got Netusb playinfo succesfully from ' + devip + 'with  ' + JSON.stringify(result));
 
-            var resp = { "device": type, "request": '/netusb/getPlayInfo', "responses": att }
-            if (!responses.find(o => o.device === devtype + '_' + devuid && o.request === '/netusb/getPlayInfo')) responses.push(resp)
+            var resp = { "device": type, "request": '/netusb/getPlayInfo', "responses": att };
+            if (!responses.find(o => o.device === devtype + '_' + devuid && o.request === '/netusb/getPlayInfo')) responses.push(resp);
             adapter.setForeignState('musiccast.0.' + devtype + '_' + devuid + 'netusb.getPlayInfo', { val: att, ack: true });
 
 
@@ -3211,7 +3211,7 @@ function getMusicNetusbInfo(ip, type, uid) {
         else { adapter.log.debug('failure getting Netusb playinfo from  ' + devip + ' : ' + responseFailLog(result)); }
     }).catch(function (err) {
         if (err.message.includes('connect EHOSTUNREACH')) {
-            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!')
+            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!');
         } else {
             adapter.log.error(`[getMusicNetusbInfo] error: ${err.message}, stack: ${err.stack}`);
         }
@@ -3232,7 +3232,7 @@ function getMusicNetusbRecent(ip, type, uid) {
         else { adapter.log.debug('failure getting Netusb recent info from  ' + devip + ' : ' + responseFailLog(result)); }
     }).catch(function (err) {
         if (err.message.includes('connect EHOSTUNREACH')) {
-            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!')
+            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!');
         } else {
             adapter.log.error(`[getMusicNetusbRecent] error: ${err.message}, stack: ${err.stack}`);
         }
@@ -3253,7 +3253,7 @@ function getMusicNetusbPreset(ip, type, uid) {
         else { adapter.log.debug('failure getting Netusb preset info from  ' + devip + ' : ' + responseFailLog(result)); }
     }).catch(function (err) {
         if (err.message.includes('connect EHOSTUNREACH')) {
-            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!')
+            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!');
         } else {
             adapter.log.error(`[getMusicNetusbPreset] error: ${err.message}, stack: ${err.stack}`);
         }
@@ -3270,8 +3270,8 @@ function getMusicCdInfo(ip, type, uid) {
 
             adapter.log.debug('got CD playinfo succesfully from ' + devip + 'with  ' + JSON.stringify(result));
 
-            var resp = { "device": devtype + '_' + devuid, "request": '/cd/getPlayInfo', "responses": att }
-            if (!responses.find(o => o.device === devtype + '_' + devuid && o.request === '/cd/getPlayInfo')) responses.push(resp)
+            var resp = { "device": devtype + '_' + devuid, "request": '/cd/getPlayInfo', "responses": att };
+            if (!responses.find(o => o.device === devtype + '_' + devuid && o.request === '/cd/getPlayInfo')) responses.push(resp);
 
             adapter.setForeignState('musiccast.0.' + devtype + '_' + devuid + '.cd.getPlayInfo', { val: att, ack: true });
             for (var key in att) {
@@ -3303,7 +3303,7 @@ function getMusicCdInfo(ip, type, uid) {
 
     }).catch(function (err) {
         if (err.message.includes('connect EHOSTUNREACH')) {
-            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!')
+            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!');
         } else {
             adapter.log.error(`[getMusicCdInfo] error: ${err.message}, stack: ${err.stack}`);
         }
@@ -3319,8 +3319,8 @@ function getMusicTunerInfo(ip, type, uid) {
         if (att.response_code === 0) {
             adapter.log.debug('got Tuner playinfo succesfully from ' + devip + 'with  ' + JSON.stringify(result));
 
-            var resp = { "device": devtype + '_' + devuid, "request": '/tuner/getPlayInfo', "responses": att }
-            if (!responses.find(o => o.device === devtype + '_' + devuid && o.request === '/tuner/getPlayInfo')) responses.push(resp)
+            var resp = { "device": devtype + '_' + devuid, "request": '/tuner/getPlayInfo', "responses": att };
+            if (!responses.find(o => o.device === devtype + '_' + devuid && o.request === '/tuner/getPlayInfo')) responses.push(resp);
             adapter.setForeignState('musiccast.0.' + devtype + '_' + devuid + '.tuner.getPlayInfo', { val: att, ack: true });
 
             adapter.setForeignState('musiccast.0.' + devtype + '_' + devuid + '.tuner.band', { val: att.band, ack: true });
@@ -3366,7 +3366,7 @@ function getMusicTunerInfo(ip, type, uid) {
 
     }).catch(function (err) {
         if (err.message.includes('connect EHOSTUNREACH')) {
-            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!')
+            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!');
         } else {
             adapter.log.error(`[getMusicTunerInfo] error: ${err.message}, stack: ${err.stack}`);
         }
@@ -3383,8 +3383,8 @@ function getMusicTunerPreset(ip, type, uid) {
         if (att.response_code === 0) {
             adapter.log.debug('got Common Tuner preset info succesfully from ' + devip + 'with  ' + JSON.stringify(result));
 
-            var resp = { "device": devtype + '_' + devuid, "request": '/tuner/getPresetInfo', "responses": att }
-            if (!responses.find(o => o.device === devtype + '_' + devuid && o.request === '/tuner/getPrestInfo')) responses.push(resp)
+            var resp = { "device": devtype + '_' + devuid, "request": '/tuner/getPresetInfo', "responses": att };
+            if (!responses.find(o => o.device === devtype + '_' + devuid && o.request === '/tuner/getPrestInfo')) responses.push(resp);
 
             adapter.setForeignState('musiccast.0.' + devtype + '_' + devuid + '.tuner.common_preset_info', { val: att.preset_info, ack: true });
             //adapter.setForeignState('musiccast.0.'+ devtype + '_' + devuid + '.tuner.preset_info', {val: JSON.stringify(att.preset_info), ack: true});                                      
@@ -3392,7 +3392,7 @@ function getMusicTunerPreset(ip, type, uid) {
         else { adapter.log.debug('failure getting Common Tuner preset info from  ' + devip + ' : ' + responseFailLog(result)); }
     }).catch(function (err) {
         if (err.message.includes('connect EHOSTUNREACH')) {
-            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!')
+            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!');
         } else {
             adapter.log.error(`[getMusicTunerPreset] error: ${err.message}, stack: ${err.stack}`);
         }
@@ -3408,7 +3408,7 @@ function getMusicTunerPreset(ip, type, uid) {
         else { adapter.log.debug('failure getting FM Tuner preset info from  ' + devip + ' : ' + responseFailLog(result)); }
     }).catch(function (err) {
         if (err.message.includes('connect EHOSTUNREACH')) {
-            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!')
+            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!');
         } else {
             adapter.log.error(`[getMusicTunerPreset error: ${err.message}, stack: ${err.stack}`);
         }
@@ -3424,7 +3424,7 @@ function getMusicTunerPreset(ip, type, uid) {
         else { adapter.log.debug('failure getting AM Tuner preset info from  ' + devip + ' : ' + responseFailLog(result)); }
     }).catch(function (err) {
         if (err.message.includes('connect EHOSTUNREACH')) {
-            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!')
+            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!');
         } else {
             adapter.log.error(`[getMusicTunerPreset error: ${err.message}, stack: ${err.stack}`);
         }
@@ -3440,7 +3440,7 @@ function getMusicTunerPreset(ip, type, uid) {
         else { adapter.log.debug('failure getting DAB Tuner preset info from  ' + devip + ' : ' + responseFailLog(result)); }
     }).catch(function (err) {
         if (err.message.includes('connect EHOSTUNREACH')) {
-            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!')
+            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!');
         } else {
             adapter.log.error(`[getMusicTunerPreset error: ${err.message}, stack: ${err.stack}`);
         }
@@ -3456,8 +3456,8 @@ function getMusicClockSettings(ip, type, uid) {
         if (att.response_code === 0) {
             adapter.log.debug('got Clock settings succesfully from ' + devip + 'with  ' + JSON.stringify(result));
 
-            var resp = { "device": devtype + '_' + devuid, "request": '/clock/getSettings', "responses": att }
-            if (!responses.find(o => o.device === devtype + '_' + devuid && o.request === '/clock/getSettings')) responses.push(resp)
+            var resp = { "device": devtype + '_' + devuid, "request": '/clock/getSettings', "responses": att };
+            if (!responses.find(o => o.device === devtype + '_' + devuid && o.request === '/clock/getSettings')) responses.push(resp);
             adapter.setForeignState('musiccast.0.' + devtype + '_' + devuid + '.clock.getSettings', { val: att, ack: true });
             /*
             for (var key in att){
@@ -3575,7 +3575,7 @@ function getMusicClockSettings(ip, type, uid) {
 
     }).catch(function (err) {
         if (err.message.includes('connect EHOSTUNREACH')) {
-            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!')
+            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!');
         } else {
             adapter.log.error(`[getMusicClockSettings] error: ${err.message}, stack: ${err.stack}`);
         }
@@ -3606,7 +3606,7 @@ function getMusicDistInfo(ip, type, uid) {
 
     }).catch(function (err) {
         if (err.message.includes('connect EHOSTUNREACH')) {
-            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!')
+            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!');
         } else {
             adapter.log.error(`[getMusicDistInfo] error: ${err.message}, stack: ${err.stack}`);
         }
@@ -3624,8 +3624,8 @@ function defineMusicDeviceFeatures(ip, type, uid) {
             adapter.log.debug('got features succesfully from ' + devip);
             adapter.log.debug('number of zones ' + att.system.zone_num);
 
-            var resp = { "device": devtype + '_' + devuid, "request": '/system/getFeatures', "responses": att }
-            if (!responses.find(o => o.device === devtype + '_' + devuid && o.request === '/system/getFeatures')) responses.push(resp)
+            var resp = { "device": devtype + '_' + devuid, "request": '/system/getFeatures', "responses": att };
+            if (!responses.find(o => o.device === devtype + '_' + devuid && o.request === '/system/getFeatures')) responses.push(resp);
             adapter.setForeignState('musiccast.0.' + devtype + '_' + devuid + '.system.getFeatures', { val: att, ack: true });
 
             for (var i = 0; i < att.zone.length; i++) {
@@ -3688,7 +3688,7 @@ function defineMusicDeviceFeatures(ip, type, uid) {
         else { adapter.log.debug('failure getting features from  ' + devip + ' : ' + responseFailLog(result)); }
     }).catch(function (err) {
         if (err.message.includes('connect EHOSTUNREACH')) {
-            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!')
+            adapter.log.warn(err.message.replace('connect EHOSTUNREACH', '') + ' not reachable!');
         } else {
             adapter.log.error(`[defineMusicDeviceFeatures] error: ${err.message}, stack: ${err.stack}`);
         }
@@ -3784,7 +3784,7 @@ function gotUpdate(msg, devIp) {
 
 process.on('SIGINT', function () {
     if (mcastTimeout) clearTimeout(mcastTimeout);
-})
+});
 
 function main() {
     try {
