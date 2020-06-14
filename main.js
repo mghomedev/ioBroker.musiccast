@@ -516,8 +516,9 @@ function startAdapter(options) {
                 }
                 if (dp === 'distr_state') {  //Start/Stop distribution
                     //startDistribution(num) als Funktion aufrufen oder hier als 
+                    let num = 1; //FIXME: Why is that hard-coded to 1 ?
+
                     if (state.val === true || state.val === 'true' || state.val === 'on') {
-                        var num = 1;
                         yamaha.startDistribution(num).then(function (result) {
                             if (JSON.parse(result).response_code === 0) {
                                 adapter.log.debug('sent Start Distribution');
@@ -580,6 +581,8 @@ function startAdapter(options) {
                     var masterpayload = { "group_id": groupID, "zone": "main", "type": "remove", "client_list": [clientIP] };
 
                     yamaha2 = new YamahaYXC(state.val);
+
+                    let num = 1; //FIXME: Why was that not defined here and why was it hard-coded to 1 near distr_state ?
 
                     yamaha2.stopDistribution(num).then(function (result) {
                         if (JSON.parse(result).response_code === 0) {
