@@ -60,21 +60,98 @@ function startAdapter(options) {
 
                 //ermitteln der IP aus config
                 adapter.log.debug('device with uid = ' + idy.split("_")[1]);
+                var objtype = idy.split("_")[0];
                 var uid = idy.split("_")[1];
                 var IP = getConfigObjects(adapter.config.devices, 'uid', uid);
                 adapter.log.debug('config items : ' + JSON.stringify(adapter.config.devices));
                 adapter.log.debug('IP configured : ' + IP[0].ip + ' for UID ' + uid);
 
                 yamaha = new YamahaYXC(IP[0].ip);
-
+        
+                var devIp = IP[0].ip;
                 var zone = idx;
+                
+                if (dp === 'triggerForceRefresh') {
+                   
+                    if (zone == null || zone == "" || zone == "netusb" || zone == "system") {
+                        adapter.log.info('sending triggerForceRefresh for netUSB  to ' + zone + '...');
 
-                if (dp === 'power') {
+                        getMusicNetusbRecent(devIp, objtype, uid);
+                        getMusicNetusbInfo(devIp, objtype, uid);
+                        getMusicNetusbPreset(devIp, objtype, uid);
+                    }
+
+                    if (zone == null || zone == "" || zone === "system" || zone === "main") {
+                        adapter.log.info('sending triggerForceRefresh  for zone ' + zone + '...');
+
+                        getMusicZoneInfo(devIp, objtype, uid, zone);
+                    }
+
+                    if (zone == null || zone == "" || zone === "system") {
+                        adapter.log.info('sending triggerForceRefresh for deviceInfo for zone ' + zone + '...');
+
+                        getMusicDeviceInfo(devIp, objtype, uid, zone);
+                    }
+
+
+                    return;
+                }
+             
+                if (dp === 'play_time' && zone == 'netusb') {
+                    yamaha.SendGetToDevice("/netusb/setPlayPosition?position=" + state.val).then(function (result) {
+                        if (JSON.parse(result).response_code === 0) {
+                            adapter.log.info('sent play_time succesfully to ' + zone + ' with ' + state.val);
+                            if (adapter.config.netusbplaytime) {
+                                // refresh to get current value
+                                setTimeout(function () {
+                                    getMusicNetusbInfo(devIp, objtype, uid); // trigger reread
+                                }, 500);
+                            }
+                        }
+                        else adapter.log.error('failure sent play_time (val=' + state.val + ')' + responseFailLog(result));
+                    });
+
+                    return;
+                }
+
+                if (dp === 'playback' && zone == 'netusb') {
+                    let playbackCommand = state.val;
+
+                    if (playbackCommand == 'pausePending') return;
+
+                    if (playbackCommand == 'pause') {
+                        // bugfix against strange Yamaha behavior that starts play again when 'pause' is sent twice
+                        // note that we trigger refresh anyways
+                        adapter.setForeignState(id, {val: "pausePending", ack: true}); 
+                    }
+                    adapter.log.info('invoking to sent playback-status succesfully to ' + zone + ' with ' + playbackCommand);
+                        
+                    yamaha.setNetPlayback(playbackCommand).then(function (result) {
+                        if (JSON.parse(result).response_code === 0) {
+                            adapter.log.info('sent playback-status succesfully to ' + zone + ' with ' + playbackCommand);
+                            if (adapter.config.netusbplaytime) {
+                                // refresh to get current value
+                                setTimeout(function () {
+                                    getMusicNetusbInfo(devIp, objtype, uid); // trigger reread
+                                }, 500);
+                            }
+                        }
+                        else{
+                            adapter.log.error('failure sent playback-status (val=' + playbackCommand + ')' + responseFailLog(result));
+                            adapter.setForeignState(id, {val: "errorUnknown", ack: true});                        
+                        } 
+                    });
+
+                    return;
+                }
+
+
+                if (dp === 'power'){
+                  
                     let convertValue = state.val ? 'on' : 'standby';
-
                     yamaha.power(convertValue, zone).then(function (result) {
                         if (JSON.parse(result).response_code === 0) {
-                            adapter.log.debug('sent power succesfully to ' + zone + ' with ' + convertValue + '(' + state.val + ')');
+                            adapter.log.debug('sent power succesfully to ' + zone + ' with ' + convertValue + '(' + state.val + ')');                          
                             //adapter.setForeignState(id, true, true);
                         }
                         else { adapter.log.debug('failure setting power' + responseFailLog(result)); }
@@ -1155,6 +1232,21 @@ function defineMusicZoneNew(type, uid, zone, zone_arr) {
     if (zone_arr.func_list.indexOf("signal_info") !== -1) {
         // signal info audio ....
     }
+
+
+    adapter.setObjectNotExists(type + '_' + uid + '.' + zone + '.triggerForceRefresh', {
+        type: 'state',
+        common: {
+            "name": "Trigger force refresh by polling",
+            "type": "number",
+            "read": false,
+            "write": true,
+            "role": "value",
+            "desc": "Change the value to trigger polling"
+        },
+        native: {}
+    });
+    
 }
 function defineMusicInputs(type, uid, zone, inputs) {
     adapter.log.info('Setting up Inputs in Zone:' + zone + ' of ' + type + '-' + uid);
@@ -1631,7 +1723,7 @@ function defineMusicNetUsb(type, uid) {
             "name": "playback status",
             "type": "string",
             "read": true,
-            "write": false,
+            "write": true,
             "role": "text",
             "desc": "playback status"
         },
@@ -1799,7 +1891,7 @@ function defineMusicNetUsb(type, uid) {
             "name": "played  time",
             "type": "number",
             "read": true,
-            "write": false,
+            "write": true,
             "unit": "s",
             "role": "value",
             "desc": "played time"
@@ -1912,6 +2004,19 @@ function defineMusicNetUsb(type, uid) {
             "write": false,
             "role": "list",
             "desc": "netusb array shuffle"
+        },
+        native: {}
+    });   
+
+    adapter.setObjectNotExists(type + '_' + uid + '.netusb.triggerForceRefresh', {
+        type: 'state',
+        common: {
+            "name": "Trigger force refresh by polling",
+            "type": "number",
+            "read": false,
+            "write": true,
+            "role": "value",
+            "desc": "Change the value to trigger polling"
         },
         native: {}
     });
@@ -3695,6 +3800,7 @@ function defineMusicDeviceFeatures(ip, type, uid) {
     });
 }
 //UDP update
+
 function gotUpdate(msg, devIp) {
     try {
         var dev = getConfigObjects(adapter.config.devices, 'ip', devIp);
@@ -3703,6 +3809,11 @@ function gotUpdate(msg, devIp) {
             if (msg.netusb.play_time && adapter.config.netusbplaytime) {
                 adapter.setForeignState('musiccast.0.' + dev[0].type + '_' + dev[0].uid + '.netusb.playtime', { val: msg.netusb.play_time, ack: true });
             }
+          
+            if (msg.netusb.total_time){
+             adapter.setForeignState('musiccast.0.'+ dev[0].type + '_' + dev[0].uid + '.netusb.total_time', {val: msg.netusb.total_time, ack: true});
+            }
+          
             if (msg.netusb.play_info_updated) {
                 getMusicNetusbInfo(devIp, dev[0].type, dev[0].uid);
             }
