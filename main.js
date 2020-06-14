@@ -2985,7 +2985,7 @@ function defineMusicClock(type, uid, func_list, range_step, alarm_fade_type_num,
 
     if (alarm_mode_list.indexOf("weekly") !== -1) {
         var days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
-        for (anz in days) {
+        for (let anz in days) {
             //loop days[anz]
             adapter.setObjectNotExists(type + '_' + uid + '.clock.' + days[anz] + '.enable', {
                 type: 'state',
