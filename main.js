@@ -3378,7 +3378,7 @@ function getMusicTunerPreset(ip, type, uid) {
     var devuid = uid;
     yamaha = new YamahaYXC(ip);
 
-    yamaha.getTunerPresetInfo(common).then(function (result) {
+    yamaha.getTunerPresetInfo("common").then(function (result) {
         var att = JSON.parse(result);
         if (att.response_code === 0) {
             adapter.log.debug('got Common Tuner preset info succesfully from ' + devip + 'with  ' + JSON.stringify(result));
@@ -3398,7 +3398,7 @@ function getMusicTunerPreset(ip, type, uid) {
         }
     });
     //if (FM)
-    yamaha.getTunerPresetInfo(fm).then(function (result) {
+    yamaha.getTunerPresetInfo("fm").then(function (result) {
         var att = JSON.parse(result);
         if (att.response_code === 0) {
             adapter.log.debug('got FM Tuner preset info succesfully from ' + devip + 'with  ' + JSON.stringify(result));
@@ -3414,7 +3414,7 @@ function getMusicTunerPreset(ip, type, uid) {
         }
     });
     //if (AM)
-    yamaha.getTunerPresetInfo(am).then(function (result) {
+    yamaha.getTunerPresetInfo("am").then(function (result) {
         var att = JSON.parse(result);
         if (att.response_code === 0) {
             adapter.log.debug('got AM Tuner preset info succesfully from ' + devip + 'with  ' + JSON.stringify(result));
@@ -3430,7 +3430,7 @@ function getMusicTunerPreset(ip, type, uid) {
         }
     });
     //if (DAB)    
-    yamaha.getTunerPresetInfo(dab).then(function (result) {
+    yamaha.getTunerPresetInfo("dab").then(function (result) {
         var att = JSON.parse(result);
         if (att.response_code === 0) {
             adapter.log.debug('got DAB Tuner preset info succesfully from ' + devip + 'with  ' + JSON.stringify(result));
