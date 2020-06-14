@@ -3294,7 +3294,7 @@ function getMusicNetusbInfo(ip, type, uid) {
 
             for (var key in att) {
                 if (key == "albumart_url") {
-                    var albumurl = att.albumart_url;
+                    albumurl = att.albumart_url;
                     if (albumurl.substr(0, 20) === '/YamahaRemoteControl') {
                         albumurl = 'http://' + devip + att.albumart_url;
                     }
