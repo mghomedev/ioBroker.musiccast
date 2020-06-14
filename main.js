@@ -3888,7 +3888,7 @@ function gotUpdate(msg, devIp) {
             getMusicClockSettings(devIp, dev[0].type, dev[0].uid);
         }
 
-    } catch (error) {
+    } catch (err) {
         adapter.log.error(`[gotUpdate] error: ${err.message}, stack: ${err.stack}`);
     }
 }
@@ -4023,7 +4023,7 @@ function main() {
         });
     
         */
-    } catch (error) {
+    } catch (err) {
         adapter.log.error(`[main] error: ${err.message}, stack: ${err.stack}`);
     }
 }
