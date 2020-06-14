@@ -2,8 +2,56 @@
     "common": {
 
         "name": "musiccast",
-        "version": "0.1.1",
+        "version": "0.1.5",
         "news": {
+             "0.1.5": {
+                "en": "error handling when device is not reachable",
+                "de": "Fehlerbehandlung, wenn das Gerät nicht erreichbar ist",
+                "ru": "обработка ошибок, когда устройство недоступно",
+                "pt": "tratamento de erros quando o dispositivo não está acessível",
+                "nl": "foutafhandeling wanneer het apparaat niet bereikbaar is",
+                "fr": "gestion des erreurs lorsque le périphérique n'est pas accessible",
+                "it": "gestione degli errori quando il dispositivo non è raggiungibile",
+                "es": "manejo de errores cuando el dispositivo no es accesible",
+                "pl": "obsługa błędów, gdy urządzenie jest nieosiągalne",
+                "zh-cn": "设备无法访问时的错误处理"
+              },
+            "0.1.4": {
+                "en": "correction of type mismatch",
+                "de": "Korrektur der Typfehlanpassung",
+                "ru": "исправление несоответствия типов",
+                "pt": "correção de incompatibilidade de tipo",
+                "nl": "correctie van het type komt niet overeen",
+                "fr": "correction de l'inadéquation des types",
+                "it": "correzione del tipo non corrispondente",
+                "es": "corrección de desajuste de tipo",
+                "pl": "korekta niedopasowania typu",
+                "zh-cn": "纠正类型不匹配"
+              },
+             "0.1.3": {
+                "en": "added writing for linkControl/linkAudioDelay/linkAudioQuality",
+                "de": "Schreiben für linkControl / linkAudioDelay / linkAudioQuality hinzugefügt",
+                "ru": "добавлена запись для linkControl / linkAudioDelay / linkAudioQuality",
+                "pt": "escrita adicionada para linkControl / linkAudioDelay / linkAudioQuality",
+                "nl": "toegevoegd schrijven voor linkControl / linkAudioDelay / linkAudioQuality",
+                "fr": "ajout d'écriture pour linkControl / linkAudioDelay / linkAudioQuality",
+                "it": "aggiunta la scrittura per linkControl / linkAudioDelay / linkAudioQuality",
+                "es": "escritura agregada para linkControl / linkAudioDelay / linkAudioQuality",
+                "pl": "dodano zapis dla linkControl / linkAudioDelay / linkAudioQuality",
+                "zh-cn": "为linkControl / linkAudioDelay / linkAudioQuality添加了写作"
+              },
+             "0.1.2": {
+                "en": "correction of type mismatch",
+                "de": "Korrektur von Typinkongruenzen",
+                "ru": "исправление несоответствия типов",
+                "pt": "correção de incompatibilidade de tipo",
+                "nl": "correctie van type mismatch",
+                "fr": "correction de l'inadéquation des types",
+                "it": "correzione del tipo non corrispondente",
+                "es": "corrección de tipo no coincidente",
+                "pl": "korekta niedopasowania typu",
+                "zh-cn": "纠正类型不匹配"
+              },
              "0.1.1": {
                 "en": "clock oneday correction",
                 "de": "Uhr eintägige Korrektur",
