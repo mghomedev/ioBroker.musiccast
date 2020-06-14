@@ -77,6 +77,7 @@ The following objects are currently implemented:
 |--------|-------|:-:|--------|
 |netusb.input|value|x|set/actual input|
 |netusb.playPause|boolean|x|set Play/Pause|
+|netusb.stop|boolean|x|set Stop|
 |netusb.playback|text|x|status net player|
 |netusb.auto_stop|boolean|-|automatically stopped|
 |netusb.next|boolean|x|set Forward|
@@ -201,11 +202,24 @@ The following objects are currently implemented:
 * dialog level
 
 ## Changelog
+
 #### mghomedev-branch changes
 * introduce netusb.triggerForceRefresh to trigger reload of netusb data from server
 * make netusb.playback writable and when written allow improved 'pause'-behavior to allow external scripts to see if 'pause' is pending 
 * make netusb.playtime writable
 * tried to make netusb.total_time working, but the Yamaha servers do not seem to send the data (always 0)
+
+#### 0.1.5
+* (Scrounger) error handling when device is not reachable
+
+#### 0.1.4
+* (Scrounger) correction of type mismatch (array object)
+
+#### 0.1.3
+* (foxthefox) added writing for linkControl/linkAudioDelay/linkAudioQuality
+
+#### 0.1.2
+* (Scrounger) correction of type mismatch (string boolean)
 
 #### 0.1.1
 * correction for clock "oneday"
@@ -265,4 +279,4 @@ The following objects are currently implemented:
 
 The MIT License (MIT)
 
-Copyright (c) 2017 - 2019 foxthefox <foxthefox@wysiwis.net>
+Copyright (c) 2017 - 2020 foxthefox <foxthefox@wysiwis.net>
