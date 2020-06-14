@@ -540,12 +540,12 @@ function startAdapter(options) {
                 if (dp === 'add_to_group') {  //state.val enthält die IP des Masters
 
                     //addToGroup(state.val, IP[0].ip); 
-                    var groupID = md5(state.val);
-                    var clientIP = IP[0].ip;
+                    let groupID = md5(state.val);
+                    let clientIP = IP[0].ip;
                     adapter.log.debug('clientIP ' + clientIP + 'ID ' + groupID);
 
-                    var clientpayload = { "group_id": groupID, "zone": ["main"] };
-                    var masterpayload = { "group_id": groupID, "zone": "main", "type": "add", "client_list": [clientIP] };
+                    let clientpayload = { "group_id": groupID, "zone": ["main"] };
+                    let masterpayload = { "group_id": groupID, "zone": "main", "type": "add", "client_list": [clientIP] };
                     yamaha2 = new YamahaYXC(state.val);
 
                     yamaha.setClientInfo(JSON.stringify(clientpayload)).then(function (result) {
@@ -574,11 +574,11 @@ function startAdapter(options) {
                 }
                 if (dp === 'remove_from_group') {  //state.val enthält die Master IP
                     //removeFromGroup(state.val, IP[0].ip);
-                    var groupID = md5(state.val);
-                    var clientIP = IP[0].ip;
+                    let groupID = md5(state.val);
+                    let clientIP = IP[0].ip;
                     adapter.log.debug('clientIP ' + clientIP);
-                    var clientpayload = { "group_id": "", "zone": ["main"] };
-                    var masterpayload = { "group_id": groupID, "zone": "main", "type": "remove", "client_list": [clientIP] };
+                    let clientpayload = { "group_id": "", "zone": ["main"] };
+                    let masterpayload = { "group_id": groupID, "zone": "main", "type": "remove", "client_list": [clientIP] };
 
                     yamaha2 = new YamahaYXC(state.val);
 
